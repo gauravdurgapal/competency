@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.competency.model.Response;
 import com.capgemini.competency.model.User;
 import com.capgemini.competency.model.UserInterface;
 
+/*
+ * Control the login request
+ */
 @RestController
 public class LoginController {
 	
@@ -25,15 +29,18 @@ public class LoginController {
 	}
 	
     @RequestMapping("/login")
-	public boolean loginHomePage(@RequestBody User loginDetails)
+	public Response loginHomePage(@RequestBody User loginDetails)
 	{
 		User u = null;
+		Response response = new Response();
 		try {
 			u = userInter.findAllByUsername(loginDetails.getUsername());
 			if(u!= null) {
 				if(u.getPassword().equals(loginDetails.getPassword()))
-				{
-					return true;
+				{					
+					response.setStatus("success");
+					response.setMessage("User got successfully login");
+					return response;
 				}
 			}
 		}
@@ -41,10 +48,10 @@ public class LoginController {
 			System.out.println("username not found");
 			
 		}
-		
-		return false;
-
-		
+		response.setStatus("fail");
+		response.setMessage("username Or password is incorrect!!");
+		System.out.println("Response "+response.getStatus());
+		return response;
 	}
 
 }
