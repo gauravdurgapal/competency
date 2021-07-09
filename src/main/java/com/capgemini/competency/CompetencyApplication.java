@@ -3,7 +3,6 @@ package com.capgemini.competency;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 /*
  * Start of the project
  */
